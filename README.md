@@ -76,7 +76,7 @@ Ahora nos aparecerán las opciones para crear una nueva función.
 En mi caso solo ingresé el nombre de la función y lo demás lo deje tal cual estaba. 
 
 ```markdown
-1. Nombre de la funcion: getCandidatos
+Nombre de la funcion: getCandidatos
 ``` 
 
 ![](img/10.jpg)
@@ -232,7 +232,6 @@ Seleccionamos la opcion de ***Crear método***, y del menú desplegable seleccio
 Al presionar el botón de check, veremos la configuración del método.
 
 ```markdown
-
 Seleccionamos en Tipo de integración: Función Lambda
 ```
 
@@ -342,9 +341,100 @@ exports.handler =  (event, context, callback) => {
  
  Para desarrollar la parte del Front-end usaré el framework Angular.
  
+ Es necsario tener instalado node js y AngularCLI
+ 
+ Usar este link para instalar [node js](https://nodejs.org/es/)
+ 
+ Una vez instaldo node js instalaremos angular desde una terminal con el comando:
+ 
+ ```markdown
+ > npm install -g @angular/cli
+ ```
+ 
+ Ahora desde una terminal ingresaremos el siguiente comando, el cual nos servirá para crear un nuevo proyecto de Angular: 
+ 
+ ```
+ > ng new candidatos
+ 
+ //Candidatos es el nombre del proyecto, usted puede poner cualquier otro.
+ ```
+ 
+ ![](img/48.jpg)
+ 
+ presionamos ***y***
+ 
+ ![](img/49.jpg)
+ 
+ y seleccionamos CSS
+ 
+ Ahora instalaremos algunas dependencias y las incluiremos en el proyecto.
+ 
+ instalamos bootstrap y jquery con el siguiente comando: 
+ 
+ ```markdown
+ npm i bootstrap jquery
+ ```
+
+Ahora nos dirigimos al archivo ***angular.json*** y dentro de la propiedad **build** modificaremos styles y scripts con los siguientes datos:
+
+```json
+"styles": [
+          "src/styles.css",
+          "node_modules/bootstrap/dist/css/bootstrap.min.css"
+          ],
+"scripts": [
+          "node_modules/jquery/dist/jquery.min.js",
+          "node_modules/bootstrap/dist/js/bootstrap.min.js"
+          ]
+```
  
  
  
+ #### Estructura del proyecto
+ 
+ ![](img/50.jpg)
+ 
+ Tenemos que crear 3 carpetas dentro de **app**
+ 
+ ![](img/51.jpg)
+ 
+ ```markdown
+ 
+ _models -> aquí tendremos todos nuestros modelos para "parsear" los datos obtenidos de la API.
+ 
+ _services -> aquí tendremos conexiones con la API y podremos hacer peticiones.
+ 
+ components -> aquí tendremos las vistas y la lógica de las mismas.
+ 
+ ```
+ 
+Pirmero crearemos los componentes cada uno con el siguiente comando :
+
+```markdown
+ng generate component candidatos
+```
+![](img/52.jpg) 
+ 
+Se crearán 4 archivos y se actualizará otro, este último nos ayuda a poder acceder a los componentes y utilizarlos con el selector **< app-nombre del componente > < /app-nombre del componente>**.
+
+Agregare otros componentes para ayudar al usuario a tener una forma de navegar entre vistas.
+
+```markdown
+Un componente para la información de cada Candidato.
+
+Un componente para tener una barra de tareas fija.
+
+Un componente para tener un footer fijo.
+```
+ 
+ ![](img/53.jpg)
+ 
+ Una vez lista la configuración del nuevo proyecto, hacemos **cd candidatos** e ingresaremos el siguiente comando: 
+ 
+ ```markdown
+ > npm start
+ ```
+ Este comando sirve para iniciar el proyecto y leer todas las modificaciones de los archivos dentro y fuera de la carpeta **src** 
  
  
  
