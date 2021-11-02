@@ -2,11 +2,11 @@
 
 # Práctica desarrollo web (AWS)
 
-Para la primer parte empezaremos desarrollando la parte del back-end usando AWS (DynamoBD y Lambda)
+### 1. Back-end
 
-## 1. Crear una cuenta en AWS 
+Empezaré desarrollando la parte del back-end usando AWS **(DynamoBD, Lambda y API Gateway)**
 
-Usando el siguiente 
+Primero hay que crear una cuenta en AWS Usando este 
 [link](https://portal.aws.amazon.com/billing/signup?refid=ps_a134p000003yhp0aai&trkcampaign=acq_paid_search_brand&redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation&language=es_es#/start)
 
 ```markdown
@@ -31,7 +31,7 @@ Al presionar el botón nos aparecerán los detalles de la tabla.
 En mi caso yo ingresé los valores de 
 
 ```markdown
-1. Nombre :
+1. Nombre de la tabla:
     Candidatos
 2. Clave de partición: 
     id : número.
@@ -44,11 +44,11 @@ Una vez creada nos aparecerán las tablas dentro de DynamoDB, y podemos observar
 
 ![](img/5.jpg)
 
-Ahora entraremos a ver más detalles de la tabla, presionando la liga con el nombre de la tabla.
+Ahora entraremos a ver más detalles de la tabla, presionando la liga con el nombre de la misma.
 
 ![](img/6.jpg)
 
-Aquí es donde podremos ver los detalles de la tabla.
+Aquí es donde podremos ver lo siguiente.
 
 ```markdown
 > Información general
@@ -155,7 +155,7 @@ Después nos aparecerá un buscador, en el cual teclearemos Dynamo y seleccionam
 > AmazonDynamoDBFullAccess
 ```
 
-Y presionamos el botón ***Asociar Política**
+Y presionamos el botón ***Asociar Política***
 
 ![](img/19.jpg)
 
@@ -225,21 +225,23 @@ Lo seleccionamos y presionamos el botón de acciones.
 
 ![](img/32.jpg)
 
-Seleccionamos la opcion de ***Crear método*** del menú desplegable seleccionamos GET y presionamos el icono de check
+Seleccionamos la opcion de ***Crear método***, y del menú desplegable seleccionamos **GET** y presionamos el icono de check
 
 ![](img/33.jpg)
 
 Al presionar el botón de check, veremos la configuración del método.
 
 ```markdown
-Tipo de integración: Función Lambda
+
+Seleccionamos en Tipo de integración: Función Lambda
 ```
 
 ![](img/34.jpg)
 
 ```markdown
-Función Lambda: getCandidatos (la función que creamos anteriormente)
+En Función Lambda escribimos el nombre de la función que creamos anteriormente 
 
+En este caso:  getCandidatos 
 ```
 
 ![](img/35.jpg)
@@ -273,11 +275,11 @@ Y seleccionamos **Implementar API**
 ![](img/42.jpg)
 ```markdown
 Ingresamos en etapa de implementación: [nueva etapa]
-y en nombre de la fase el nombre cualquier cosa, por ejemplo UAT
+y en nombre de la fase el nombre cualquier cosa, por ejemplo: UAT
 ```
 ![](img/43.jpg)
 
-Y presionamos el botón ***Implementación**
+Y presionamos el botón ***Implementación***
 
 ![](img/44.jpg)
 
@@ -285,9 +287,71 @@ Ahora podremos invocar la url para probar el endpoint, agregando el recurso que 
 
  https://9h4uugy0hj.execute-api.us-east-2.amazonaws.com/UAT/all
  
- Si probamos con postman, obtendremos la siguiente información, la cual es correcta, y nos dice que el endpoint funciona! Ahora tendremos que realizar endpoints para editar, para crear y eliminar.
+ Si probamos con postman, obtendremos la siguiente información, la cual es correcta, y nos dice que el endpoint funciona! Ahora tendremos que realizar un endpoint para editar las habilidades de un Candidato.
  
  ![](img/45.jpg)
+ 
+ Los pasos son prácticamente los mismos, solo hay que crear nuevas funciones lambda con diferentes acciones.
+ 
+ ### Con el siguiente código podemos actualizar las habilidades de un Candidato
+ 
+ ```javascript
+ 
+var AWS = require("aws-sdk");
+var docClient = new AWS.DynamoDB.DocumentClient()
+exports.handler =  (event, context, callback) => {
+
+    const params = {
+        TableName : "Candidatos",
+        Key : {
+            'id' : event.id
+        },
+        UpdateExpression: "set java = :j, elastic = :e, microservicios = :m",
+        ExpressionAttributeValues:{
+            ":j":event.java,
+            ":e":event.elastic,
+            ":m":event.microservicios
+        },
+        ReturnValues:"UPDATED_NEW"
+    }
+    
+    docClient.update(params, function(err, data) {
+        if (err){
+            callback(err,null)
+        }else{
+            callback(null, data)
+        }
+    })
+};
+ ```
+ Agregamos un nuevo endpoint a nuestra API, el cual será, de tipo PATCH (ya que estamos modificando parcialmente el índice)
+ 
+ ![](img/46.jpg)
+ 
+ Implementamos este recurso en la API y consultamos mediante el url resultante.
+ 
+ https://9h4uugy0hj.execute-api.us-east-2.amazonaws.com/UAT3/update
+ 
+ ![](img/47.jpg)
+ 
+ En esta petición pasamos dentro del body un json con los datos del Candidato, ya con modificaciones, en este caso yo cambié la las habilidades elastic y microservicios a true y la respuesta fue un json con los atributos que fueron cambiados, es decir que en un principio todos tenían un valor de false. 
+ 
+ Ahora podemos pasar a desarrollar la parte del Front-end.
+ 
+ ### 2. Front-end
+ 
+ Para desarrollar la parte del Front-end usaré el framework Angular.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
 
 
