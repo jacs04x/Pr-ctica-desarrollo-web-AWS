@@ -7,6 +7,9 @@ import { CandidatosComponent } from './components/candidatos/candidatos.componen
 import { InformacionComponent } from './components/informacion/informacion.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -14,11 +17,15 @@ import { HeaderComponent } from './components/header/header.component';
     CandidatosComponent,
     InformacionComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     CandidatosComponent, 

@@ -436,6 +436,125 @@ Un componente para tener un footer fijo.
  ```
  Este comando sirve para iniciar el proyecto y leer todas las modificaciones de los archivos dentro y fuera de la carpeta **src** 
  
+ Ahora, angular nos proveerá un Live Development Server, que estará escuchando en localhost:4200
+ Abrimos http://localhost:4200/ y ahí podremos ver la pagina html que angular ha creado. Pero eso a nosotros no nos sirve por lo que tendremos que modificarla y agregar unas rutas para las vistas que necesitemos (estas vistas las encontramos en los componentes).
+ 
+ ```markdown
+ Borramos todo lo que este dentro del archivo 
+ > app.component.html
+ 
+ y agregamos este selector: 
+ 
+ > <router-outlet></router-outlet>
+ 
+ Este selector nos dará permiso de usar rutas que definiremos en el archivo 
+ 
+ > app-routing.module.ts
+ ```
+ 
+ Dentro del archivo **app-routing.module.ts** definimos las rutas de cada componente
+ 
+ ![](img/54.jpg)
+ 
+ En este caso solo tendremos 2 opciones de vistas, una para los candidatos y otra para un candidato en especifico.
+ 
+ Guardamos los cambios y nos dirigimos al navegador, y lo primero que podremos ver será que efectivamente en la ruta '' tenemos los elementos del componente para los candidatos
+ 
+ ![](img/55.jpg)
+ 
+ y en la ruta 'info' tendremos la información de un candidato en especifico 
+ 
+ ![](img/56.jpg)
+ 
+ Ahora hay que dar estilo y obtener datos de la API.
+ 
+ #### Crear Servicios para obtener datos de la API.
+ 
+ Detenemos el proyecto con Ctrl+c, para generar archivos y asi poder hacer uso de nuestra API.
+ 
+ Primero nos dirigimos a la carpeta de **_services** desde la terminal y escribimos el siguiente comando: 
+ 
+ ```markdown
+ > ng generate service candidatos
+ ```
+ 
+ ![](img/57.jpg)
+ 
+ Se crearán 2 archivos.
+ 
+ En el archivo **candidatos.service.ts**  es donde haremos las peticiones a la API.
+ 
+ Ahora crearemos un modelo para hacer uso de objetos.
+ 
+ Nos dirigimos a la carpeta **_models** y creamos un nuevo archivo con el nombre **candidato.ts**
+ 
+ Aqui definiremos los atributos de un candidato:
+ 
+ ```markdown
+ id : number
+ Nombre: string
+ fecha_entrevista: date
+ elastic: boolean
+ java: boolean
+ microservicios: boolean
+ 
+ ```
+ Asi nos tiene que quedar nuestro modelo, exportamos la clase y generamos un constructor para una instancia.
+ 
+ ```typescript
+ export class Candidato{
+
+    id : number 
+    nombre: string
+    fecha_entrevista: Date
+    elastic: boolean
+    java: boolean
+    microservicios: boolean
+
+  constructor(
+    id: number , 
+    nombre: string, 
+    fecha_entrevista: Date, 
+    elastic: boolean, 
+    java: boolean, 
+    microservicios: boolean
+) {
+    this.id = id
+    this.nombre = nombre
+    this.fecha_entrevista = fecha_entrevista
+    this.elastic = elastic
+    this.java = java
+    this.microservicios = microservicios
+  }
+}
+ ```
+ 
+ Ahora nos dirigimos al archivo **candidatos.service.ts** para importar este modelo y algunos objetos de http para hacer peticiones.
+ 
+ ![](img/58.jpg)
+ 
+ Ahora de AWS console traermos las urls de los endpoints. 
+ 
+ ```markdown
+ 
+ Para obtener todos los registros dentro de la Tabla Candidatos usamos esta url:
+ * https://9h4uugy0hj.execute-api.us-east-2.amazonaws.com/UAT/all 
+ 
+ Para hacer update de un candidato usamos esta url:
+ * https://9h4uugy0hj.execute-api.us-east-2.amazonaws.com/UAT2/update
+ 
+ ```
+ 
+ Definimos la url de la API y definimos los metodos para hacer las peticiones, en este caso un get y un patch.
+ 
+ ![](img/59.jpg)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
