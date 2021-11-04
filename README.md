@@ -778,7 +778,68 @@ Y cuando presionemos Guardar se nos mostrará una alerta que se obtuvo al instal
 
 ![image-20211103222838409](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\69.jpg)
 
-¡Terminamos!
+Eso seria todo para el front-end, ahora hay que desplegar le proyecto en un servidor, para acceder de manera pública. 
+
+### Desplegar el proyecto en Heroku.
+
+Modificamos algunas dependencias dentro del archivo package.json las copiamos de **devDependencies** y las pegamos en **dependencies** 
+
+```
+"@angular/cli": "~12.2.4",
+"@angular/compiler-cli": "~12.2.0",
+"typescript": "~4.3.5"
+```
+
+Agregamos lo siguiente dentro de los scripts del archivo package.json
+
+```
+"start": "node server.js --proxy-config proxy.conf.json",
+"heroku-postbuild": "ng build --prod"
+```
+
+Y agregamos al final 
+
+```json
+"engines":{
+        "node": "14.15.4",
+        "npm": "8.1.1"
+    }
+//las versiones las podemos conultar en una terminal ingresando los comandos
+// node -v  
+// npm  -v
+```
+
+Instalamos Express en el proyecto (npm i Express --save)
+
+y creamos un archivo en la raíz del proyecto, con el nombre ***Server.js*** y agergamos el siguiente código: 
+
+```
+
+const express = require('express');
+const path = require('path');
+
+const app = express();
+app.use(express.static('./dist/candidatos'));
+
+app.get('/*', (req, res) =>
+    res.sendFile('index.html', {root: 'dist/candidatos/'}),
+);
+app.listen(process.env.PORT || 8080);
+```
+
+
+
+### Heroku
+
+1. Creamos una cuenta en Heroku.
+
+2. Accedemos 
+
+3. Creamos una nueva aplicación 
+
+   ![image-20211103224452337](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\70.jpg)
+
+
 
 
 
