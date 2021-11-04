@@ -1,0 +1,28 @@
+body {
+    min-height: calc(100vh - 130px);
+}
+
+h1 {
+    padding: 15px;
+    font-size: 35px;
+}
+
+.card {
+    padding: 15px;
+    border: solid 1px;
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+}
+
+.container {
+    padding: 5px;
+    width: 80%;
+}
+
+h4 {
+    font-size: 20px;
+}
+
+h5 {
+    font-size: 15px;
+}

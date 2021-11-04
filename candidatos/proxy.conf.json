@@ -1,0 +1,8 @@
+{
+    "/UAT/*": {
+        "target": "https://9h4uugy0hj.execute-api.us-east-2.amazonaws.com/",
+        "secure": false,
+        "changeOrigin": true
+    }
+
+}

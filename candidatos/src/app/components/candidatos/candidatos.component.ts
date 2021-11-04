@@ -20,17 +20,15 @@ export class CandidatosComponent implements OnInit {
     this.getCandidatos()
 
   }
-
   getCandidatos(){
     this.candidatosService.getCandidatos().subscribe(
       res => {
         this.candidatos=res
-        console.log(res)
+        console.log(this.candidatos)
       },
       err => {
         console.log("algo salio mal al consultar los candidatos")
       }
     )
   }
-
 }

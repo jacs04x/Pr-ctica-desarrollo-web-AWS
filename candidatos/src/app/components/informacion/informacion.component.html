@@ -1,1 +1,40 @@
-<p>informacion works!</p>
+<app-header></app-header>
+
+<body>
+    <h1>Información del candidato</h1>
+    <div *ngFor="let i of candidato">
+        <div class="container">
+
+            <div class="card">
+                <div>
+                    <h4>Nombre</h4>
+                    <div class="text-center">
+                        {{i.nombre}}
+                    </div>
+                    <br>
+                    <h4>Habilidades</h4> <br>
+                </div>
+                <div>
+                    <h4> &nbsp; &nbsp; Fecha de Entrevista</h4>
+                    <div class="text-center">
+                        <span class="badge bg-danger"> <h5>&nbsp; {{i.fecha_entrevista}} &nbsp;</h5></span>
+                    </div>
+                </div>
+                <table>
+                    <tr *ngFor="let i of habilidades">
+                        <td>{{i.nombre}}</td>
+                        <td><input type="checkbox" [value]="i.id" [checked]="i.selected" class="form-check-input" (change)=onChangeHabilidad($event)> </td>
+                    </tr>
+
+                </table>
+                <br>
+                <div class="text-center"><br><button class="btn btn-success" (click)="update()">Guardar</button></div>
+                <div></div>
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+<app-footer></app-footer>

@@ -7,24 +7,18 @@ import {Candidato} from '../_models/candidato'
 })
 export class CandidatosService {
 
-  API_URL =  "https://9h4uugy0hj.execute-api.us-east-2.amazonaws.com/"
-
-
-
   constructor(private httpClient: HttpClient) { }
 
   getCandidatos(){
-    let headers = new HttpHeaders({
-      'Access-Control-Allow-Headers' : 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-      'Access-Control-Allow-Origin' : '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS'
-    })
-    
-    return this.httpClient.get(this.API_URL+"/UAT/all", {headers})
+    return this.httpClient.get("/UAT/all")
+  }
+
+  getCandidato(id:number){
+    return this.httpClient.get("UAT/get?id="+id)
   }
 
   updateCandidato(candidato: Candidato){
-    return this.httpClient.patch(this.API_URL+"UAT2/update", candidato)
+    return this.httpClient.patch("/UAT/update", candidato)
   }
 
 }

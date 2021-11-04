@@ -1,8 +1,18 @@
 <app-header></app-header>
 
 <body>
-
-
-
+    <h1 class="text-center">Lista de candidatos</h1>
+    <div *ngFor="let candidato of candidatos">
+        <div class="container">
+            <div class="card">
+                <div class="text-center">
+                    {{candidato.nombre}} &nbsp;
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-info btn-sm"> <a href="/info?id={{candidato.id}}">Detalles</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <app-footer></app-footer>

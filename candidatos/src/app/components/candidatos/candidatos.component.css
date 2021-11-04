@@ -1,3 +1,25 @@
 body {
     min-height: calc(100vh - 130px);
 }
+
+.container {
+    padding: 5px;
+    width: 35%;
+}
+
+h1 {
+    padding: 15px;
+    font-size: 35px;
+}
+
+.card {
+    padding: 15px;
+    border: solid 1px;
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
