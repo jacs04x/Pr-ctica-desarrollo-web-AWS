@@ -652,11 +652,11 @@ por lo que ahora tendremos que usar siempre el comando ***npm start*** para inic
 
 Como ya no tenemos error con CORS, podemos ver los datos que se obtienen al consultar la API. de forma facil los podemos ver desde la consola del navegador, pero tenemos que mostrarlo en la vista de los candidatos.
 
-![](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\60.jpg) 
+![](img\60.jpg) 
 
  Abrimos el archivo **candidatos.component.html** y accedemos al atributo candidatos del archivo **candidatos.component.ts** 
 
-![image-20211103102037720](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\61.jpg)
+![](img\61.jpg)
 
 Iteramos sobre el atributo y obtenemos sus propiedades, pero hay que mostrarlo con estilo, asi que lo pondre dentro de un elemento card junto con un botón, para que así podamos navegar entre vistas.
 
@@ -680,7 +680,7 @@ Iteramos sobre el atributo y obtenemos sus propiedades, pero hay que mostrarlo c
 <app-footer></app-footer>
 ```
 
-![image-20211103212758836](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\62.jpg)
+![](img\62.jpg)
 
 La vista quedaría así, ya con estilos aplicados. Podemos observar que se muestra una lista de los candidatos obtenidos de la consulta a la API. Se muestra el nombre del candidato y un botón para ver más detalles.
 
@@ -725,7 +725,7 @@ Ahora Ingresaremos al Servicio API Gateway.
 
 Abrimos la API que construimos y crearemos un nuevo recurso.
 
-![image-20211103214213027](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\63.jpg)
+![](img\63.jpg)
 
 Ingresaremos el nombre del recurso y la ruta del recurso entre { }. Creamos el recurso y creamos un método GET dentro del mismo.
 
@@ -735,21 +735,21 @@ Damos click en **Parámetros de cadenas de consulta de URL** y agregamos una cad
 
 Cambiamos la configuración de **Validador de solicitudes** por **Validar parámetros de cadena de consulta y encabezados** y eso nos quitará ese warning.
 
-![image-20211103214828590](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\64.jpg)
+![](img\64.jpg)
 
 Ahora regresamos a la sección de ejecución de método y damos click en **Solicitud de integración **, agregamos la función que creamos y después nos dirigimos a la sección de plantillas de mapeo.
 
-![image-20211103220256481](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\65.jpg)
+![](img\65.jpg)
 
 En **Acceso directo de cuerpo de solicitud** seleccionamos **Cuando no haya definida ninguna plantilla (recomendado)** y en **Content-Type** application/json, ahora generamos la plantilla: 
 
-![image-20211103220608206](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\66.jpg)
+![](img\66.jpg)
 
 Guardamos e implementamos la API.
 
 Ahora podremos hacer una petición get con parámetros en la ruta, y la prodremos agregar al service para hacer peticiones a la API.
 
-![image-20211103220901632](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\67.jpg)
+![](img\67.jpg)
 
 ```markdown
 *Nota
@@ -758,7 +758,7 @@ la ruta que definimos fue "parametro", pero en realidad a la hora de hacer petic
 
 Ahora regresando al front-end ya podemos hacer consultas por id, y obtener la información de un candidato en especifico.
 
-![image-20211103221312113](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\68.jpg)
+![](img\68.jpg)
 
 Así se vería la vista de información de un candidato en especifico. 
 
@@ -776,7 +776,7 @@ Y cuando presionemos Guardar se nos mostrará una alerta que se obtuvo al instal
 
  Los checkbox siempre que se guarden como marcados al acceder a la vista estos estarán marcados.
 
-![image-20211103222838409](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\69.jpg)
+![](img\69.jpg)
 
 Eso seria todo para el front-end, ahora hay que desplegar le proyecto en un servidor, para acceder de manera pública. 
 
@@ -835,11 +835,11 @@ app.listen(process.env.PORT || 8080);
 
 3. Creamos una nueva aplicación 
 
-   ![image-20211103224452337](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\70.jpg)
+   ![](img\70.jpg)
 
-Ahora regresamos al proyecto y hacermos **heroku login**, ingresamos a nuestra cuenta ![image-20211103231249096](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\71.jpg)
+Ahora regresamos al proyecto y hacermos **heroku login**, ingresamos a nuestra cuenta ![](img\71.jpg)
 
 Y seguimos los pasos: 
 
-![image-20211103231339996](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\72.jpg)
+![](img\72.jpg)
 
