@@ -615,7 +615,7 @@ En el agregaremos lo siguiente:
 }
 ```
 
- Al agregar esto, no evitaremos el problema de CORS. 
+ Al agregar esto, evitaremos el problema de CORS. (ya que queremos acceder a recursos de distintos servidores)
 
 Ahora abrimos el archivo **package.json** y modificamos la propiedad "start" con lo siguiente: 
 
@@ -658,17 +658,127 @@ Como ya no tenemos error con CORS, podemos ver los datos que se obtienen al cons
 
 ![image-20211103102037720](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\61.jpg)
 
-Iteramos sobre el atributo y obtenemos sus propiedades, pero hay que mostrarlo con estilo, asi que lo pondre dentro de un elemento card.
+Iteramos sobre el atributo y obtenemos sus propiedades, pero hay que mostrarlo con estilo, asi que lo pondre dentro de un elemento card junto con un botón, para que así podamos navegar entre vistas.
 
+```html
+<app-header></app-header>
+<body>
+    <h1 class="text-center">Lista de candidatos</h1>
+    <div *ngFor="let candidato of candidatos">
+        <div class="container">
+            <div class="card">
+                <div class="text-center">
+                    {{candidato.nombre}} &nbsp;
+                </div>
+                <div class="text-center">
+     <button class="btn btn-info btn-sm"> <a href="/info?id={{candidato.id}}">Detalles</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<app-footer></app-footer>
+```
 
+![image-20211103212758836](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\62.jpg)
 
+La vista quedaría así, ya con estilos aplicados. Podemos observar que se muestra una lista de los candidatos obtenidos de la consulta a la API. Se muestra el nombre del candidato y un botón para ver más detalles.
 
+Este botón tiene un comportamiento similar a un hipervínculo (por lo que hay que hacer click sobre las letras),  el cual nos redireccionará a la vista de información, pasando parámetros dentro de la ruta. 
 
+Por ejemplo para ver la información del Candidato "Jonatan" (el segundo) la ruta sería  http://localhost:4200/info?id=1, por lo que ahora ese parámetro, nos servirá para hacer una petición a la API y obtener la información por el uso del id.
 
+Desde un principio supe que necesitaría una petición por id, solo que en un principio no la construí, ya que pensé que no seria necesaria, pero es de gran ayuda ya que en la parte del front-end no haríamos tantos cálculos. Entonces me regresaré un poco a AWS para crear otro enpoint y facilitar más las cosas.
 
+#### Creación de endpoint  para obtener información de un candidato (por id).
 
+Creamos una nueva función Lambda, con lo siguiente: 
 
+```javascript
+var AWS = require("aws-sdk");
+exports.handler =  (event, context, callback) => {
+    //con event.params.querystring.id obtenemos el parametro de la ruta. (id)
+    const id =  parseInt(event.params.querystring.id,10)   
+    const params = {
+    TableName: "Candidatos",
+    KeyConditionExpression: "id = :i",
+    ExpressionAttributeValues : {
+        ':i': id
+    }
+}
+const docClient = new AWS.DynamoDB.DocumentClient({region: "us-east-2" })
 
+docClient.query(params, function (err, data){
+    if (err){
+        callback(err,null)
+    }else {
+        callback(null,data.Items)
+    }
+})
+    
+};
+```
+
+Y agregamos las políticas de acceso a DynamoDB.
+
+Ahora Ingresaremos al Servicio API Gateway.
+
+Abrimos la API que construimos y crearemos un nuevo recurso.
+
+![image-20211103214213027](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\63.jpg)
+
+Ingresaremos el nombre del recurso y la ruta del recurso entre { }. Creamos el recurso y creamos un método GET dentro del mismo.
+
+Ahora damos click en el método y después en Solicitud de método.
+
+Damos click en **Parámetros de cadenas de consulta de URL** y agregamos una cadena de consulta, esta tendrá el nombre de **id** y será obligatorio.
+
+Cambiamos la configuración de **Validador de solicitudes** por **Validar parámetros de cadena de consulta y encabezados** y eso nos quitará ese warning.
+
+![image-20211103214828590](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\64.jpg)
+
+Ahora regresamos a la sección de ejecución de método y damos click en **Solicitud de integración **, agregamos la función que creamos y después nos dirigimos a la sección de plantillas de mapeo.
+
+![image-20211103220256481](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\65.jpg)
+
+En **Acceso directo de cuerpo de solicitud** seleccionamos **Cuando no haya definida ninguna plantilla (recomendado)** y en **Content-Type** application/json, ahora generamos la plantilla: 
+
+![image-20211103220608206](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\66.jpg)
+
+Guardamos e implementamos la API.
+
+Ahora podremos hacer una petición get con parámetros en la ruta, y la prodremos agregar al service para hacer peticiones a la API.
+
+![image-20211103220901632](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\67.jpg)
+
+```markdown
+*Nota
+la ruta que definimos fue "parametro", pero en realidad a la hora de hacer peticiones esta ruta puede tomar cualquier nombre, y debe obligatoriamente añadir el parametro id.
+```
+
+Ahora regresando al front-end ya podemos hacer consultas por id, y obtener la información de un candidato en especifico.
+
+![image-20211103221312113](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\68.jpg)
+
+Así se vería la vista de información de un candidato en especifico. 
+
+En esta vista podremos:
+
+```markdown
+1. Ver información del candidato (Nombre y Habilidades)
+2. Ver la fecha de entrevista
+3. Modificar la información de las habilidades del candidato.
+```
+
+Cuando queramos modificar una habilidad, solo se modificara en la base de datos si presionamos el botón de Guardar.
+
+Y cuando presionemos Guardar se nos mostrará una alerta que se obtuvo al instalar sweetalert2 (con **npm i sweetalert2**) 
+
+ Los checkbox siempre que se guarden como marcados al acceder a la vista estos estarán marcados.
+
+![image-20211103222838409](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\69.jpg)
+
+¡Terminamos!
 
 
 

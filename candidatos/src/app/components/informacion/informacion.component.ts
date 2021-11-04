@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { CandidatosService } from '../../_services/candidatos.service'
 import {Candidato} from '../../_models/candidato'
-
+import Swal from 'sweetalert2'
 declare var $: any
 
 @Component({
@@ -36,8 +36,6 @@ export class InformacionComponent implements OnInit {
         x += this.habilidades.push({id:2, selected: this.candidato[0].microservicios, nombre:"Microservicios"})
         x+= this.habilidades.push({id:3, selected: this.candidato[0].elastic, nombre:"Elastic"})
 
-        console.log(this.habilidades)
-
       },
       err => {
         console.log("error al obtener el candidato con id="+this.id)
@@ -67,7 +65,7 @@ update(){
 
   this.candidatosService.updateCandidato(nuevo).subscribe(
       res => {
-        console.log(res)
+        this.showSuccess("Guardado!")
       },
       err => {
         console.log(err)
@@ -75,6 +73,14 @@ update(){
     )
 }
 
+showSuccess(texto: String){
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: texto,
+  showConfirmButton: true,
   
+})
+}
 
 }
