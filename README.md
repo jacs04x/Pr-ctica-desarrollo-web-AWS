@@ -809,7 +809,7 @@ Y agregamos al final
 // npm  -v
 ```
 
-Instalamos Express en el proyecto (npm i Express --save)
+Instalamos express en el proyecto (npm i express --save)
 
 y creamos un archivo en la raíz del proyecto, con el nombre ***Server.js*** y agergamos el siguiente código: 
 
@@ -827,8 +827,6 @@ app.get('/*', (req, res) =>
 app.listen(process.env.PORT || 8080);
 ```
 
-
-
 ### Heroku
 
 1. Creamos una cuenta en Heroku.
@@ -839,7 +837,9 @@ app.listen(process.env.PORT || 8080);
 
    ![image-20211103224452337](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\70.jpg)
 
+Ahora regresamos al proyecto y hacermos **heroku login**, ingresamos a nuestra cuenta ![image-20211103231249096](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\71.jpg)
 
+Y seguimos los pasos: 
 
-
+![image-20211103231339996](C:\Users\Lenovo\Documents\GitHub\Pr-ctica-desarrollo-web-AWS\img\72.jpg)
 
